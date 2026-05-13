@@ -153,13 +153,13 @@
   </div>
 
   <!-- Main Card -->
-  <div class="w-full max-w-4xl bg-white rounded-3xl shadow-sm border border-zinc-200/80 overflow-hidden mb-16">
+  <div class="w-full max-w-4xl bg-white rounded-3xl shadow-md shadow-zinc-900/[0.06] ring-1 ring-zinc-950/[0.04] border border-zinc-200/80 overflow-hidden mb-16">
     <div class="p-6 sm:p-10">
       
-      <form id="testerForm" class="space-y-8">
+      <form id="testerForm" class="space-y-10">
         <!-- URL Input -->
         <div>
-          <label for="url" class="block text-sm font-medium text-zinc-600 mb-2">
+          <label for="url" class="block text-sm font-semibold text-zinc-800 tracking-tight mb-2">
             Target URL
           </label>
           <div class="relative">
@@ -172,7 +172,7 @@
               list="url-history-datalist"
               autocomplete="off"
               placeholder="e.g., example.com, localhost:3000, or https://yourwebsite.com"
-              class="block w-full pl-12 pr-4 py-4 bg-zinc-50 border border-zinc-200 rounded-2xl text-zinc-800 placeholder-zinc-400 focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
+              class="block w-full pl-12 pr-4 py-4 bg-zinc-50/90 border border-zinc-200 rounded-2xl text-zinc-900 placeholder-zinc-400 shadow-sm focus:bg-white focus:ring-2 focus:ring-zinc-900/90 focus:ring-offset-2 focus:ring-offset-white focus:border-zinc-300 transition-all outline-none"
             />
             <datalist id="url-history-datalist"></datalist>
           </div>
@@ -180,30 +180,34 @@
         </div>
 
         <!-- Resolution Inputs & Actions -->
-        <div class="flex flex-col gap-4">
-          <div class="flex flex-col lg:flex-row gap-4 items-end">
-            <div class="flex-1 w-full">
-              <p id="resolution-legend" class="block text-sm font-medium text-zinc-600 mb-2">
-                Resolution (Width × Height)
-              </p>
-              <div class="flex items-center space-x-3" role="group" aria-labelledby="resolution-legend">
+        <div class="space-y-5">
+          <div class="space-y-2">
+            <p id="resolution-legend" class="block text-sm font-semibold text-zinc-800 tracking-tight">
+              Resolution (Width × Height)
+            </p>
+            <div
+              class="rounded-2xl border border-zinc-200/90 bg-gradient-to-b from-zinc-50 to-zinc-100/30 p-2 sm:p-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6)]"
+              role="group"
+              aria-labelledby="resolution-legend"
+            >
+              <div class="flex items-stretch gap-2 sm:gap-3 min-w-0">
                 <label for="width" class="sr-only">Width in CSS pixels</label>
                 <input
                   type="number"
                   id="width"
                   value="1024"
-                  class="block w-full px-4 py-3 text-center bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
+                  class="block flex-1 min-w-[5.5rem] px-3 sm:px-4 py-3 text-center text-zinc-900 tabular-nums bg-white border border-zinc-200/90 rounded-xl shadow-sm focus:ring-2 focus:ring-zinc-900/90 focus:ring-offset-2 focus:ring-offset-zinc-50 focus:border-zinc-300 transition-all outline-none"
                   placeholder="W"
                   inputmode="numeric"
                   min="1"
                 />
-                <span class="text-zinc-400 font-medium text-lg" aria-hidden="true">&times;</span>
+                <span class="flex items-center text-zinc-300 font-medium text-lg shrink-0 select-none" aria-hidden="true">&times;</span>
                 <label for="height" class="sr-only">Height in CSS pixels</label>
                 <input
                   type="number"
                   id="height"
                   value="768"
-                  class="block w-full px-4 py-3 text-center bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
+                  class="block flex-1 min-w-[5.5rem] px-3 sm:px-4 py-3 text-center text-zinc-900 tabular-nums bg-white border border-zinc-200/90 rounded-xl shadow-sm focus:ring-2 focus:ring-zinc-900/90 focus:ring-offset-2 focus:ring-offset-zinc-50 focus:border-zinc-300 transition-all outline-none"
                   placeholder="H"
                   inputmode="numeric"
                   min="1"
@@ -211,7 +215,7 @@
                 <button
                   type="button"
                   id="rotate-btn"
-                  class="p-3 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-colors"
+                  class="shrink-0 inline-flex items-center justify-center min-w-[2.875rem] rounded-xl border border-zinc-200/90 bg-white text-zinc-500 shadow-sm hover:text-zinc-900 hover:bg-zinc-50 hover:border-zinc-300 active:scale-[0.98] transition-all"
                   title="Rotate orientation"
                   aria-label="Swap width and height"
                 >
@@ -219,29 +223,43 @@
                 </button>
               </div>
             </div>
+          </div>
 
-            <div id="launch-actions" class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto shrink-0">
+          <div class="space-y-3">
+            <p class="text-xs font-medium uppercase tracking-wider text-zinc-500">Launch</p>
+            <div id="launch-actions" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 w-full">
               <button
                 type="submit"
                 id="launch-test-btn"
-                class="w-full sm:w-auto px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-sm"
+                class="w-full min-h-[3rem] px-4 py-3 sm:py-3.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl text-sm font-semibold tracking-tight flex items-center justify-center gap-2 shadow-md shadow-zinc-900/25 transition-all active:scale-[0.99]"
               >
                 Launch Test
-                <i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>
+                <i data-lucide="external-link" class="w-4 h-4 shrink-0 opacity-90" aria-hidden="true"></i>
               </button>
               <button
                 type="button"
                 id="launch-selected-btn"
                 disabled
-                class="w-full sm:w-auto px-8 py-4 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors border border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-50 disabled:opacity-40 disabled:pointer-events-none disabled:hover:bg-white"
+                class="w-full min-h-[3rem] px-3 py-3 sm:py-3.5 rounded-xl text-sm font-semibold tracking-tight flex items-center justify-center gap-2 border border-zinc-200 bg-white text-zinc-800 shadow-sm hover:bg-zinc-50 hover:border-zinc-300 disabled:pointer-events-none disabled:bg-zinc-50/90 disabled:text-zinc-400 disabled:border-zinc-200/80 disabled:shadow-none transition-all active:scale-[0.99]"
               >
-                <span id="launch-selected-label">Launch selected (0)</span>
-                <i data-lucide="layers" class="w-4 h-4" aria-hidden="true"></i>
+                <span id="launch-selected-label" class="text-center leading-snug">Launch selected (0)</span>
+                <i data-lucide="layers" class="w-4 h-4 shrink-0 opacity-80" aria-hidden="true"></i>
+              </button>
+              <button
+                type="button"
+                id="close-all-test-windows-btn"
+                disabled
+                class="w-full min-h-[3rem] px-3 py-3 sm:py-3.5 rounded-xl text-sm font-semibold tracking-tight flex items-center justify-center gap-2 border border-zinc-200 bg-white text-zinc-800 shadow-sm hover:bg-zinc-50 hover:border-zinc-300 disabled:pointer-events-none disabled:bg-zinc-50/90 disabled:text-zinc-400 disabled:border-zinc-200/80 disabled:shadow-none transition-all active:scale-[0.99]"
+                aria-label="Close all resolution test popup windows opened from this page"
+              >
+                <span class="text-center leading-snug">Close all windows</span>
+                <i data-lucide="x-circle" class="w-4 h-4 shrink-0 opacity-80" aria-hidden="true"></i>
               </button>
             </div>
           </div>
-          <p class="text-xs text-zinc-500 font-light">
-            Check a preset to include it in <span class="font-medium text-zinc-600">Launch selected</span>. Tap the device name or size to copy that resolution into width/height and scroll to the launch buttons.
+
+          <p class="text-xs text-zinc-500 leading-relaxed max-w-3xl">
+            Check a preset to include it in <span class="font-medium text-zinc-700">Launch selected</span>. Tap a device name or size to copy that resolution into width and height and scroll here to launch.
           </p>
         </div>
       </form>
@@ -249,17 +267,17 @@
     </div>
 
     <!-- Presets Section -->
-    <div class="bg-zinc-50/50 border-t border-zinc-100 p-6 sm:p-10">
-      <div class="mb-6">
-        <h3 class="text-sm font-semibold text-zinc-900 uppercase tracking-wider mb-1">
+    <div class="bg-zinc-50/80 border-t border-zinc-200/60 p-6 sm:p-10">
+      <div class="mb-8 max-w-2xl">
+        <h3 class="text-sm font-semibold text-zinc-900 uppercase tracking-wider mb-2">
           Device Presets
         </h3>
-        <p class="text-xs text-zinc-500 font-light">
-          Checkbox: add or remove that size for batch launch. Device row (name or dimensions): set width/height for a single launch and scroll to the buttons.
+        <p class="text-xs text-zinc-600 leading-relaxed">
+          Use the checkbox to batch-launch sizes. Tap the device name or dimensions to load that size for a single launch.
         </p>
       </div>
       
-      <div id="presets-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div id="presets-container" class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
         <!-- Injected via JavaScript -->
       </div>
     </div>
@@ -369,13 +387,55 @@
     const faqsContainer = document.getElementById('faqs-container');
     const launchSelectedBtn = document.getElementById('launch-selected-btn');
     const launchSelectedLabel = document.getElementById('launch-selected-label');
+    const closeAllTestWindowsBtn = document.getElementById('close-all-test-windows-btn');
     const urlHistoryDatalist = document.getElementById('url-history-datalist');
 
     const URL_HISTORY_KEY = 'WebsiteResolutionTester_urlHistory_v1';
     const MAX_URL_HISTORY = 20;
 
-    const MAX_BATCH_PRESETS = 16;
     const TILE_GAP = 10;
+
+    /** Popups opened from this page in the current tab (in-memory only). */
+    const openedTestWindows = [];
+
+    function pruneClosedTestWindows() {
+      for (let i = openedTestWindows.length - 1; i >= 0; i--) {
+        if (!openedTestWindows[i] || openedTestWindows[i].closed) {
+          openedTestWindows.splice(i, 1);
+        }
+      }
+    }
+
+    function getOpenTestWindowCount() {
+      return openedTestWindows.filter(w => w && !w.closed).length;
+    }
+
+    function updateCloseAllWindowsButton() {
+      if (!closeAllTestWindowsBtn) return;
+      pruneClosedTestWindows();
+      closeAllTestWindowsBtn.disabled = getOpenTestWindowCount() === 0;
+    }
+
+    function registerTestWindow(win) {
+      if (!win) return;
+      pruneClosedTestWindows();
+      openedTestWindows.push(win);
+      updateCloseAllWindowsButton();
+    }
+
+    function closeAllTestWindows() {
+      openedTestWindows.forEach(w => {
+        if (w && !w.closed) {
+          try {
+            w.close();
+          } catch (e) {
+            /* ignore */
+          }
+        }
+      });
+      openedTestWindows.length = 0;
+      updateCloseAllWindowsButton();
+    }
 
     function loadUrlHistory() {
       try {
@@ -499,7 +559,7 @@
             const safeLabel = escapeHtml(p.label);
             const ariaPick = escapeHtml(p.label + ', ' + p.w + ' by ' + p.h + ' pixels');
             return `
-          <li class="flex items-center gap-2 w-full text-sm py-2 px-3 -mx-3 rounded-lg text-zinc-600 hover:bg-zinc-200/50 transition-colors group">
+          <li class="flex items-center gap-3 w-full text-sm py-2.5 px-3 rounded-xl text-zinc-600 border border-transparent hover:bg-white hover:border-zinc-200/90 hover:shadow-sm transition-all group">
             <input
               type="checkbox"
               id="${cbId}"
@@ -510,32 +570,34 @@
             />
             <button
               type="button"
-              class="preset-device-btn flex-1 min-w-0 flex items-center gap-2 text-left rounded-lg py-1 -my-1 pr-1 text-zinc-600 hover:text-zinc-900 group-hover:text-zinc-900"
+              class="preset-device-btn flex-1 min-w-0 flex items-center gap-2.5 text-left rounded-lg py-0.5 -my-0.5 pr-0.5 text-zinc-500 hover:text-zinc-700 group-hover:text-zinc-700"
               data-w="${p.w}"
               data-h="${p.h}"
               aria-label="Use size for single launch: ${ariaPick}"
             >
-              <span class="truncate flex-1 min-w-0">${safeLabel}</span>
-              <span class="shrink-0 text-zinc-400 font-mono text-xs opacity-80 group-hover:opacity-100 whitespace-nowrap">${p.w}×${p.h}</span>
+              <span class="truncate flex-1 min-w-0 font-semibold text-zinc-900">${safeLabel}</span>
+              <span class="shrink-0 text-zinc-700 font-mono text-xs tabular-nums whitespace-nowrap group-hover:text-zinc-900">${p.w}×${p.h}</span>
             </button>
           </li>`;
           })
           .join('');
 
         const categoryHTML = `
-          <div class="preset-category" data-preset-category="${cat.key}">
-            <div class="flex flex-wrap items-center justify-between gap-2 text-zinc-800 mb-3 font-medium">
-              <div class="flex items-center gap-2">
-                <i data-lucide="${cat.icon}" class="w-4 h-4 text-zinc-500" aria-hidden="true"></i>
+          <div class="preset-category rounded-2xl border border-zinc-200/90 bg-white p-5 sm:p-6 shadow-sm shadow-zinc-900/[0.03]" data-preset-category="${cat.key}">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-zinc-900 mb-4 pb-3 border-b border-zinc-100">
+              <div class="flex items-center gap-2.5 font-semibold tracking-tight">
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-100 text-zinc-600">
+                  <i data-lucide="${cat.icon}" class="w-4 h-4" aria-hidden="true"></i>
+                </span>
                 <span>${cat.key}</span>
               </div>
-              <div class="flex items-center gap-1 text-xs font-normal">
-                <button type="button" class="preset-select-all px-2 py-1 rounded-md text-zinc-600 hover:bg-zinc-200/70 hover:text-zinc-900" data-preset-category="${cat.key}">All</button>
-                <span class="text-zinc-300" aria-hidden="true">|</span>
-                <button type="button" class="preset-clear-cat px-2 py-1 rounded-md text-zinc-600 hover:bg-zinc-200/70 hover:text-zinc-900" data-preset-category="${cat.key}">Clear</button>
+              <div class="flex items-center gap-1 text-xs font-medium">
+                <button type="button" class="preset-select-all px-2.5 py-1.5 rounded-lg text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 transition-colors" data-preset-category="${cat.key}">All</button>
+                <span class="text-zinc-200 px-0.5" aria-hidden="true">·</span>
+                <button type="button" class="preset-clear-cat px-2.5 py-1.5 rounded-lg text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 transition-colors" data-preset-category="${cat.key}">Clear</button>
               </div>
             </div>
-            <ul class="space-y-1.5">
+            <ul class="space-y-0.5">
               ${listItems}
             </ul>
           </div>
@@ -632,6 +694,7 @@
       if (!newWin) {
         showError('Popup blocked! Please allow popups for this site to use the resolution tester.');
       } else {
+        registerTestWindow(newWin);
         rememberUrlUsed(urlInput.value.trim());
       }
     });
@@ -651,15 +714,6 @@
       const inputs = getCheckedPresetInputs();
       if (inputs.length === 0) return;
 
-      if (inputs.length > MAX_BATCH_PRESETS) {
-        showError(
-          'Please select at most ' +
-            MAX_BATCH_PRESETS +
-            ' presets at once. Fewer windows are less likely to be blocked by your browser.'
-        );
-        return;
-      }
-
       const items = inputs.map(el => ({
         w: parseInt(el.getAttribute('data-w'), 10),
         h: parseInt(el.getAttribute('data-h'), 10)
@@ -677,7 +731,11 @@
       items.forEach((item, i) => {
         const pos = positions[i];
         const wName = 'ResolutionTester_' + base + '_' + i;
-        if (openTestWindow(finalUrl, item.w, item.h, pos.left, pos.top, wName)) opened++;
+        const win = openTestWindow(finalUrl, item.w, item.h, pos.left, pos.top, wName);
+        if (win) {
+          opened++;
+          registerTestWindow(win);
+        }
       });
 
       if (opened === 0) {
@@ -691,6 +749,12 @@
         }
       }
     });
+
+    if (closeAllTestWindowsBtn) {
+      closeAllTestWindowsBtn.addEventListener('click', () => {
+        closeAllTestWindows();
+      });
+    }
 
     presetsContainer.addEventListener('click', e => {
       const t = e.target;
@@ -754,6 +818,7 @@
       renderPresets();
       renderFAQs();
       updateLaunchSelectedCount();
+      updateCloseAllWindowsButton();
       // Initialize Lucide icons after dynamic HTML injection
       lucide.createIcons();
     });
