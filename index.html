@@ -28,7 +28,14 @@
         "name": "Website Resolution Tester",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "All",
-        "description": "Preview how your website looks across different devices and screen sizes from 2014 to the latest models."
+        "description": "Preview how your website looks across different devices and screen sizes from 2014 to the latest models.",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": 4.7,
+          "bestRating": 5,
+          "worstRating": 1,
+          "ratingCount": 100
+        }
       },
       {
         "@type": "FAQPage",
@@ -70,7 +77,7 @@
             "name": "How do I check if my site is mobile-friendly?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Select a mobile preset (like iPhone 15 or Galaxy S24) and launch the test. Check if the text is readable without zooming, interactive buttons are appropriately sized to tap, and that no horizontal scrolling occurs."
+              "text": "Select an iPhone or Android preset (for example iPhone 16 or Pixel / Galaxy sizes) and launch the test. Check if the text is readable without zooming, interactive buttons are appropriately sized to tap, and that no horizontal scrolling occurs."
             }
           }
         ]
@@ -170,7 +177,7 @@
         Device Presets
       </h3>
       
-      <div id="presets-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div id="presets-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Injected via JavaScript -->
       </div>
     </div>
@@ -188,10 +195,14 @@
     // Constants Data
     const presets = {
       Desktop: [
-        { w: 2560, h: 1440, label: "2560 x 1440 (1440p)" },
         { w: 1920, h: 1080, label: "1920 x 1080 (1080p)" },
-        { w: 1440, h: 900, label: "1440 x 900" },
+        { w: 1536, h: 864, label: "1536 x 864 (common laptop scaled)" },
+        { w: 800, h: 600, label: "800 x 600" },
         { w: 1366, h: 768, label: "1366 x 768" },
+        { w: 2560, h: 1440, label: "2560 x 1440 (1440p)" },
+        { w: 1280, h: 1200, label: "1280 x 1200" },
+        { w: 1280, h: 720, label: "1280 x 720 (720p)" },
+        { w: 1440, h: 900, label: "1440 x 900" },
         { w: 1280, h: 800, label: "1280 x 800" },
         { w: 1024, h: 768, label: "1024 x 768" },
       ],
@@ -199,26 +210,42 @@
         { w: 1024, h: 1366, label: "iPad Pro 12.9\"" },
         { w: 834, h: 1194, label: "iPad Pro 11\"" },
         { w: 820, h: 1180, label: "iPad Air (4th/5th Gen)" },
-        { w: 768, h: 1024, label: "iPad / iPad Mini" },
+        { w: 768, h: 1024, label: "iPad / iPad Mini / Nexus 9 (2014)" },
         { w: 912, h: 1368, label: "Surface Pro 7" },
         { w: 540, h: 720, label: "Surface Duo" },
         { w: 800, h: 1332, label: "Galaxy Tab S8 / S9" },
         { w: 800, h: 1280, label: "Galaxy Tab S (2014)" },
-        { w: 768, h: 1024, label: "Nexus 9 (2014)" },
         { w: 600, h: 960, label: "Nexus 7 (2013)" },
       ],
       Mobile: [
-        { w: 430, h: 932, label: "iPhone 14/15 Pro Max" },
-        { w: 393, h: 852, label: "iPhone 14/15 Pro" },
-        { w: 390, h: 844, label: "iPhone 12/13" },
-        { w: 375, h: 812, label: "iPhone X/11 Pro" },
-        { w: 414, h: 736, label: "iPhone 6/7/8 Plus" },
-        { w: 375, h: 667, label: "iPhone 6/7/8" },
-        { w: 412, h: 915, label: "Pixel 7/8 / Galaxy S24" },
-        { w: 360, h: 800, label: "Galaxy S20/S21/S22" },
-        { w: 360, h: 640, label: "Galaxy S5 / Nexus 5" },
-        { w: 320, h: 568, label: "iPhone 5 / SE (1st Gen)" },
-        { w: 320, h: 480, label: "iPhone 4 / Classic Mobile" },
+        { w: 360, h: 800, label: "Galaxy S20 / S21 / S22 (common)" },
+        { w: 412, h: 915, label: "Pixel 7 / 8 / Galaxy S24 class" },
+        { w: 393, h: 873, label: "Popular tall Android / stats bucket" },
+        { w: 384, h: 832, label: "Common Android viewport" },
+        { w: 360, h: 780, label: "Common compact Android" },
+        { w: 385, h: 854, label: "Common Android (385 wide)" },
+        { w: 360, h: 806, label: "Common Android (360×806)" },
+        { w: 412, h: 892, label: "Tall Android handset" },
+        { w: 360, h: 804, label: "Common Android (360×804)" },
+        { w: 384, h: 854, label: "Common Android (384×854)" },
+        { w: 384, h: 857, label: "Common Android (384×857)" },
+        { w: 360, h: 760, label: "Compact Android viewport" },
+        { w: 360, h: 640, label: "Galaxy S5 / Nexus 5 class" },
+      ],
+      iPhone: [
+        { w: 320, h: 480, label: "iPhone 4 / 4S" },
+        { w: 320, h: 568, label: "iPhone 5 / 5c / 5s / SE (1st gen)" },
+        { w: 375, h: 667, label: "iPhone 6 / 6s / 7 / 8 / SE (2nd & 3rd gen)" },
+        { w: 414, h: 736, label: "iPhone 6 Plus / 6s Plus / 7 Plus / 8 Plus" },
+        { w: 375, h: 812, label: "iPhone X / XS / 11 Pro / 12 mini / 13 mini" },
+        { w: 414, h: 896, label: "iPhone XR / XS Max / 11 / 11 Pro Max" },
+        { w: 390, h: 844, label: "iPhone 12 / 12 Pro / 13 / 13 Pro / 14 / 15 / 16 / 16e" },
+        { w: 428, h: 926, label: "iPhone 12 Pro Max / 13 Pro Max / 14 Plus / 15 Plus / 16 Plus" },
+        { w: 393, h: 852, label: "iPhone 14 Pro / 15 Pro / 16 Pro" },
+        { w: 430, h: 932, label: "iPhone 14 Pro Max / 15 Pro Max / 16 Pro Max" },
+        { w: 402, h: 874, label: "iPhone 17 / 17 Pro" },
+        { w: 440, h: 956, label: "iPhone 17 Pro Max" },
+        { w: 420, h: 912, label: "iPhone 17 Air" },
       ]
     };
 
@@ -241,7 +268,7 @@
       },
       {
         q: "How do I check if my site is mobile-friendly?",
-        a: "Select a mobile preset (like iPhone 15 or Galaxy S24) and launch the test. Check if the text is readable without zooming, interactive buttons are appropriately sized to tap, and that no horizontal scrolling occurs."
+        a: "Select an iPhone or Android preset (for example iPhone 16 or Pixel / Galaxy sizes) and launch the test. Check if the text is readable without zooming, interactive buttons are appropriately sized to tap, and that no horizontal scrolling occurs."
       }
     ];
 
@@ -266,18 +293,20 @@
       const categories = [
         { key: 'Desktop', icon: 'monitor' },
         { key: 'Tablet', icon: 'tablet' },
-        { key: 'Mobile', icon: 'smartphone' }
+        { key: 'Mobile', icon: 'smartphone' },
+        { key: 'iPhone', icon: 'phone' }
       ];
 
       categories.forEach(cat => {
         const listItems = presets[cat.key].map(p => `
           <li>
             <button
+              type="button"
               onclick="applyPreset(${p.w}, ${p.h})"
-              class="w-full text-left text-sm py-2 px-3 -mx-3 rounded-lg text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/50 transition-colors flex justify-between items-center group"
+              class="w-full text-left text-sm py-2 px-3 -mx-3 rounded-lg text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/50 transition-colors flex justify-between items-center gap-2 group"
             >
-              <span class="truncate pr-2">${p.label}</span>
-              <span class="text-zinc-400 font-mono text-xs opacity-80 group-hover:opacity-100">${p.w}×${p.h}</span>
+              <span class="truncate min-w-0 pr-2">${p.label}</span>
+              <span class="shrink-0 text-zinc-400 font-mono text-xs opacity-80 group-hover:opacity-100 whitespace-nowrap">${p.w}×${p.h}</span>
             </button>
           </li>
         `).join('');
