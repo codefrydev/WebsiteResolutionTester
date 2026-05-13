@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Resolution Tester | codefrydev.in</title>
+  <meta name="description" content="Preview how your website looks across different devices and screen sizes from 2014 to the latest models.">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom CSS for hiding default details markers -->
+  <style>
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+  </style>
+
+  <!-- JSON-LD for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Website Resolution Tester",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "description": "Preview how your website looks across different devices and screen sizes from 2014 to the latest models."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a viewport resolution tester?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A viewport resolution tester allows developers and designers to preview how their responsive websites render on different device screen sizes, from older mobile phones to large modern desktop monitors."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why do you use logical resolution (CSS pixels) instead of physical resolution?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Modern high-DPI (Retina) screens pack multiple physical pixels into a single 'logical' CSS pixel. Testing using logical resolution ensures you see the layout exactly as the device's browser calculates it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is the popup window blocked by my browser?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Modern web browsers block unprompted popups for security. Since this tool needs to open a strictly sized external window to mimic a device, you must click 'Allow Popups' for this site in your browser's address bar."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I test my local development environment (localhost)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Because the rendering happens entirely within your own web browser, you can enter 'http://localhost:3000' or any local IP to test your development sites securely without needing to expose them to the internet."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I check if my site is mobile-friendly?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Select a mobile preset (like iPhone 15 or Galaxy S24) and launch the test. Check if the text is readable without zooming, interactive buttons are appropriately sized to tap, and that no horizontal scrolling occurs."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VM01Q3R43D"></script>
+</head>
+<body class="min-h-screen bg-zinc-50 text-zinc-800 font-sans p-4 sm:p-8 flex flex-col items-center">
+
+  <!-- Header Section -->
+  <div class="max-w-4xl w-full text-center mt-8 mb-10">
+    <div class="inline-flex items-center justify-center p-3 bg-zinc-100 rounded-2xl mb-4">
+      <i data-lucide="monitor" class="w-8 h-8 text-zinc-700" stroke-width="1.5"></i>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-light tracking-tight text-zinc-900 mb-3">
+      Website Resolution Tester
+    </h1>
+    <p class="text-zinc-500 text-base sm:text-lg max-w-2xl mx-auto font-light">
+      Preview how your website looks across different devices and screen sizes. A minimal, precise viewport testing tool covering devices from 2014 to today.
+    </p>
+  </div>
+
+  <!-- Main Card -->
+  <div class="w-full max-w-4xl bg-white rounded-3xl shadow-sm border border-zinc-200/80 overflow-hidden mb-16">
+    <div class="p-6 sm:p-10">
+      
+      <form id="testerForm" class="space-y-8">
+        <!-- URL Input -->
+        <div>
+          <label for="url" class="block text-sm font-medium text-zinc-600 mb-2">
+            Target URL
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <i data-lucide="globe" class="w-5 h-5 text-zinc-400"></i>
+            </div>
+            <input
+              type="text"
+              id="url"
+              placeholder="e.g., example.com, localhost:3000, or https://yourwebsite.com"
+              class="block w-full pl-12 pr-4 py-4 bg-zinc-50 border border-zinc-200 rounded-2xl text-zinc-800 placeholder-zinc-400 focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
+            />
+          </div>
+          <p id="error-message" class="mt-2 text-sm text-red-500 hidden"></p>
+        </div>
+
+        <!-- Resolution Inputs & Actions -->
+        <div class="flex flex-col sm:flex-row gap-4 items-end">
+          <div class="flex-1 w-full">
+            <label class="block text-sm font-medium text-zinc-600 mb-2">
+              Resolution (Width x Height)
+            </label>
+            <div class="flex items-center space-x-3">
+              <input
+                type="number"
+                id="width"
+                value="1024"
+                class="block w-full px-4 py-3 text-center bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
+                placeholder="W"
+              />
+              <span class="text-zinc-400 font-medium text-lg">&times;</span>
+              <input
+                type="number"
+                id="height"
+                value="768"
+                class="block w-full px-4 py-3 text-center bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
+                placeholder="H"
+              />
+              <button
+                type="button"
+                id="rotate-btn"
+                class="p-3 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-colors"
+                title="Rotate orientation"
+              >
+                <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full sm:w-auto px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-sm"
+          >
+            Launch Test
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+    <!-- Presets Section -->
+    <div class="bg-zinc-50/50 border-t border-zinc-100 p-6 sm:p-10">
+      <h3 class="text-sm font-semibold text-zinc-900 uppercase tracking-wider mb-6">
+        Device Presets
+      </h3>
+      
+      <div id="presets-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="w-full max-w-4xl mb-16">
+    <h2 class="text-2xl font-light text-zinc-900 mb-6">Frequently Asked Questions</h2>
+    <div id="faqs-container" class="space-y-4">
+      <!-- Injected via JavaScript -->
+    </div>
+  </div>
+
+  <script>
+    // Constants Data
+    const presets = {
+      Desktop: [
+        { w: 2560, h: 1440, label: "2560 x 1440 (1440p)" },
+        { w: 1920, h: 1080, label: "1920 x 1080 (1080p)" },
+        { w: 1440, h: 900, label: "1440 x 900" },
+        { w: 1366, h: 768, label: "1366 x 768" },
+        { w: 1280, h: 800, label: "1280 x 800" },
+        { w: 1024, h: 768, label: "1024 x 768" },
+      ],
+      Tablet: [
+        { w: 1024, h: 1366, label: "iPad Pro 12.9\"" },
+        { w: 834, h: 1194, label: "iPad Pro 11\"" },
+        { w: 820, h: 1180, label: "iPad Air (4th/5th Gen)" },
+        { w: 768, h: 1024, label: "iPad / iPad Mini" },
+        { w: 912, h: 1368, label: "Surface Pro 7" },
+        { w: 540, h: 720, label: "Surface Duo" },
+        { w: 800, h: 1332, label: "Galaxy Tab S8 / S9" },
+        { w: 800, h: 1280, label: "Galaxy Tab S (2014)" },
+        { w: 768, h: 1024, label: "Nexus 9 (2014)" },
+        { w: 600, h: 960, label: "Nexus 7 (2013)" },
+      ],
+      Mobile: [
+        { w: 430, h: 932, label: "iPhone 14/15 Pro Max" },
+        { w: 393, h: 852, label: "iPhone 14/15 Pro" },
+        { w: 390, h: 844, label: "iPhone 12/13" },
+        { w: 375, h: 812, label: "iPhone X/11 Pro" },
+        { w: 414, h: 736, label: "iPhone 6/7/8 Plus" },
+        { w: 375, h: 667, label: "iPhone 6/7/8" },
+        { w: 412, h: 915, label: "Pixel 7/8 / Galaxy S24" },
+        { w: 360, h: 800, label: "Galaxy S20/S21/S22" },
+        { w: 360, h: 640, label: "Galaxy S5 / Nexus 5" },
+        { w: 320, h: 568, label: "iPhone 5 / SE (1st Gen)" },
+        { w: 320, h: 480, label: "iPhone 4 / Classic Mobile" },
+      ]
+    };
+
+    const faqs = [
+      {
+        q: "What is a viewport resolution tester?",
+        a: "A viewport resolution tester allows developers and designers to preview how their responsive websites render on different device screen sizes, from older mobile phones to large modern desktop monitors."
+      },
+      {
+        q: "Why do you use logical resolution (CSS pixels) instead of physical resolution?",
+        a: "Modern high-DPI (Retina) screens pack multiple physical pixels into a single 'logical' CSS pixel. Testing using logical resolution ensures you see the layout exactly as the device's browser calculates it."
+      },
+      {
+        q: "Why is the popup window blocked by my browser?",
+        a: "Modern web browsers block unprompted popups for security. Since this tool needs to open a strictly sized external window to mimic a device, you must click 'Allow Popups' for this site in your browser's address bar."
+      },
+      {
+        q: "Can I test my local development environment (localhost)?",
+        a: "Yes! Because the rendering happens entirely within your own web browser, you can enter 'http://localhost:3000' or any local IP to test your development sites securely without needing to expose them to the internet."
+      },
+      {
+        q: "How do I check if my site is mobile-friendly?",
+        a: "Select a mobile preset (like iPhone 15 or Galaxy S24) and launch the test. Check if the text is readable without zooming, interactive buttons are appropriately sized to tap, and that no horizontal scrolling occurs."
+      }
+    ];
+
+    // DOM Elements
+    const urlInput = document.getElementById('url');
+    const widthInput = document.getElementById('width');
+    const heightInput = document.getElementById('height');
+    const errorText = document.getElementById('error-message');
+    const testerForm = document.getElementById('testerForm');
+    const rotateBtn = document.getElementById('rotate-btn');
+    const presetsContainer = document.getElementById('presets-container');
+    const faqsContainer = document.getElementById('faqs-container');
+
+    // Global Apply Preset Function (called from generated HTML)
+    window.applyPreset = function(w, h) {
+      widthInput.value = w;
+      heightInput.value = h;
+    };
+
+    // Render Presets dynamically
+    function renderPresets() {
+      const categories = [
+        { key: 'Desktop', icon: 'monitor' },
+        { key: 'Tablet', icon: 'tablet' },
+        { key: 'Mobile', icon: 'smartphone' }
+      ];
+
+      categories.forEach(cat => {
+        const listItems = presets[cat.key].map(p => `
+          <li>
+            <button
+              onclick="applyPreset(${p.w}, ${p.h})"
+              class="w-full text-left text-sm py-2 px-3 -mx-3 rounded-lg text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/50 transition-colors flex justify-between items-center group"
+            >
+              <span class="truncate pr-2">${p.label}</span>
+              <span class="text-zinc-400 font-mono text-xs opacity-80 group-hover:opacity-100">${p.w}×${p.h}</span>
+            </button>
+          </li>
+        `).join('');
+
+        const categoryHTML = `
+          <div>
+            <div class="flex items-center gap-2 text-zinc-800 mb-4 font-medium">
+              <i data-lucide="${cat.icon}" class="w-4 h-4 text-zinc-500"></i> ${cat.key}
+            </div>
+            <ul class="space-y-1.5">
+              ${listItems}
+            </ul>
+          </div>
+        `;
+        presetsContainer.insertAdjacentHTML('beforeend', categoryHTML);
+      });
+    }
+
+    // Render FAQs dynamically
+    function renderFAQs() {
+      faqs.forEach(faq => {
+        const faqHTML = `
+          <details class="group bg-white rounded-2xl border border-zinc-200/80 overflow-hidden">
+            <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 font-medium text-zinc-800 outline-none">
+              ${faq.q}
+              <i data-lucide="chevron-down" class="w-5 h-5 text-zinc-400 transition duration-300 group-open:-rotate-180"></i>
+            </summary>
+            <div class="px-6 pb-6 text-zinc-500 font-light leading-relaxed">
+              <p>${faq.a}</p>
+            </div>
+          </details>
+        `;
+        faqsContainer.insertAdjacentHTML('beforeend', faqHTML);
+      });
+    }
+
+    // Rotate Dimensions
+    rotateBtn.addEventListener('click', () => {
+      const temp = widthInput.value;
+      widthInput.value = heightInput.value;
+      heightInput.value = temp;
+    });
+
+    // Form Submission / Algorithm
+    testerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errorText.textContent = '';
+      errorText.classList.add('hidden');
+
+      let finalUrl = urlInput.value.trim();
+      if (!finalUrl) {
+        showError('Please enter a valid URL.');
+        return;
+      }
+
+      // Auto-prepend https:// if missing and not a localhost
+      if (!/^https?:\/\//i.test(finalUrl)) {
+        finalUrl = 'https://' + finalUrl;
+      }
+
+      const w = parseInt(widthInput.value, 10);
+      const h = parseInt(heightInput.value, 10);
+
+      if (isNaN(w) || isNaN(h) || w <= 0 || h <= 0) {
+        showError('Please enter valid dimensions.');
+        return;
+      }
+
+      // Calculate center position based on user's screen
+      const left = (window.screen.width - w) / 2;
+      const top = (window.screen.height - h) / 2;
+
+      // Launch the popup
+      const features = `width=${w},height=${h},top=${top},left=${left},popup=yes,noopener=yes,noreferrer=yes,scrollbars=yes`;
+      const newWin = window.open(finalUrl, 'ResolutionTesterWindow', features);
+
+      if (!newWin) {
+        showError('Popup blocked! Please allow popups for this site to use the resolution tester.');
+      }
+    });
+
+    function showError(msg) {
+      errorText.textContent = msg;
+      errorText.classList.remove('hidden');
+    }
+
+    // Initialize Page
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPresets();
+      renderFAQs();
+      // Initialize Lucide icons after dynamic HTML injection
+      lucide.createIcons();
+    });
+
+  </script>
+</body>
+</html>
