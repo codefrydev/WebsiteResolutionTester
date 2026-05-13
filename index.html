@@ -169,60 +169,80 @@
             <input
               type="text"
               id="url"
+              list="url-history-datalist"
+              autocomplete="off"
               placeholder="e.g., example.com, localhost:3000, or https://yourwebsite.com"
               class="block w-full pl-12 pr-4 py-4 bg-zinc-50 border border-zinc-200 rounded-2xl text-zinc-800 placeholder-zinc-400 focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
             />
+            <datalist id="url-history-datalist"></datalist>
           </div>
           <p id="error-message" class="mt-2 text-sm text-red-500 hidden"></p>
         </div>
 
         <!-- Resolution Inputs & Actions -->
-        <div class="flex flex-col sm:flex-row gap-4 items-end">
-          <div class="flex-1 w-full">
-            <p id="resolution-legend" class="block text-sm font-medium text-zinc-600 mb-2">
-              Resolution (Width × Height)
-            </p>
-            <div class="flex items-center space-x-3" role="group" aria-labelledby="resolution-legend">
-              <label for="width" class="sr-only">Width in CSS pixels</label>
-              <input
-                type="number"
-                id="width"
-                value="1024"
-                class="block w-full px-4 py-3 text-center bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
-                placeholder="W"
-                inputmode="numeric"
-                min="1"
-              />
-              <span class="text-zinc-400 font-medium text-lg" aria-hidden="true">&times;</span>
-              <label for="height" class="sr-only">Height in CSS pixels</label>
-              <input
-                type="number"
-                id="height"
-                value="768"
-                class="block w-full px-4 py-3 text-center bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
-                placeholder="H"
-                inputmode="numeric"
-                min="1"
-              />
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col lg:flex-row gap-4 items-end">
+            <div class="flex-1 w-full">
+              <p id="resolution-legend" class="block text-sm font-medium text-zinc-600 mb-2">
+                Resolution (Width × Height)
+              </p>
+              <div class="flex items-center space-x-3" role="group" aria-labelledby="resolution-legend">
+                <label for="width" class="sr-only">Width in CSS pixels</label>
+                <input
+                  type="number"
+                  id="width"
+                  value="1024"
+                  class="block w-full px-4 py-3 text-center bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
+                  placeholder="W"
+                  inputmode="numeric"
+                  min="1"
+                />
+                <span class="text-zinc-400 font-medium text-lg" aria-hidden="true">&times;</span>
+                <label for="height" class="sr-only">Height in CSS pixels</label>
+                <input
+                  type="number"
+                  id="height"
+                  value="768"
+                  class="block w-full px-4 py-3 text-center bg-zinc-50 border border-zinc-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all outline-none"
+                  placeholder="H"
+                  inputmode="numeric"
+                  min="1"
+                />
+                <button
+                  type="button"
+                  id="rotate-btn"
+                  class="p-3 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-colors"
+                  title="Rotate orientation"
+                  aria-label="Swap width and height"
+                >
+                  <i data-lucide="refresh-ccw" class="w-5 h-5" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="launch-actions" class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto shrink-0">
+              <button
+                type="submit"
+                id="launch-test-btn"
+                class="w-full sm:w-auto px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-sm"
+              >
+                Launch Test
+                <i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>
+              </button>
               <button
                 type="button"
-                id="rotate-btn"
-                class="p-3 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-colors"
-                title="Rotate orientation"
-                aria-label="Swap width and height"
+                id="launch-selected-btn"
+                disabled
+                class="w-full sm:w-auto px-8 py-4 rounded-xl font-medium flex items-center justify-center gap-2 transition-colors border border-zinc-300 bg-white text-zinc-800 hover:bg-zinc-50 disabled:opacity-40 disabled:pointer-events-none disabled:hover:bg-white"
               >
-                <i data-lucide="refresh-ccw" class="w-5 h-5" aria-hidden="true"></i>
+                <span id="launch-selected-label">Launch selected (0)</span>
+                <i data-lucide="layers" class="w-4 h-4" aria-hidden="true"></i>
               </button>
             </div>
           </div>
-
-          <button
-            type="submit"
-            class="w-full sm:w-auto px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl font-medium flex items-center justify-center gap-2 transition-colors shadow-sm"
-          >
-            Launch Test
-            <i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>
-          </button>
+          <p class="text-xs text-zinc-500 font-light">
+            Check a preset to include it in <span class="font-medium text-zinc-600">Launch selected</span>. Tap the device name or size to copy that resolution into width/height and scroll to the launch buttons.
+          </p>
         </div>
       </form>
 
@@ -230,9 +250,14 @@
 
     <!-- Presets Section -->
     <div class="bg-zinc-50/50 border-t border-zinc-100 p-6 sm:p-10">
-      <h3 class="text-sm font-semibold text-zinc-900 uppercase tracking-wider mb-6">
-        Device Presets
-      </h3>
+      <div class="mb-6">
+        <h3 class="text-sm font-semibold text-zinc-900 uppercase tracking-wider mb-1">
+          Device Presets
+        </h3>
+        <p class="text-xs text-zinc-500 font-light">
+          Checkbox: add or remove that size for batch launch. Device row (name or dimensions): set width/height for a single launch and scroll to the buttons.
+        </p>
+      </div>
       
       <div id="presets-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Injected via JavaScript -->
@@ -342,12 +367,121 @@
     const rotateBtn = document.getElementById('rotate-btn');
     const presetsContainer = document.getElementById('presets-container');
     const faqsContainer = document.getElementById('faqs-container');
+    const launchSelectedBtn = document.getElementById('launch-selected-btn');
+    const launchSelectedLabel = document.getElementById('launch-selected-label');
+    const urlHistoryDatalist = document.getElementById('url-history-datalist');
 
-    // Global Apply Preset Function (called from generated HTML)
-    window.applyPreset = function(w, h) {
-      widthInput.value = w;
-      heightInput.value = h;
-    };
+    const URL_HISTORY_KEY = 'WebsiteResolutionTester_urlHistory_v1';
+    const MAX_URL_HISTORY = 20;
+
+    const MAX_BATCH_PRESETS = 16;
+    const TILE_GAP = 10;
+
+    function loadUrlHistory() {
+      try {
+        const raw = localStorage.getItem(URL_HISTORY_KEY);
+        if (!raw) return [];
+        const arr = JSON.parse(raw);
+        return Array.isArray(arr) ? arr.filter(u => typeof u === 'string' && u.trim()) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveUrlHistory(list) {
+      try {
+        localStorage.setItem(URL_HISTORY_KEY, JSON.stringify(list.slice(0, MAX_URL_HISTORY)));
+      } catch (e) {
+        /* ignore quota / private mode */
+      }
+    }
+
+    function rememberUrlUsed(displayUrl) {
+      const u = displayUrl.trim();
+      if (!u) return;
+      const list = loadUrlHistory().filter(x => x !== u);
+      list.unshift(u);
+      saveUrlHistory(list);
+      renderUrlHistoryDatalist(list);
+    }
+
+    function renderUrlHistoryDatalist(list) {
+      urlHistoryDatalist.innerHTML = list
+        .slice(0, MAX_URL_HISTORY)
+        .map(val => '<option value="' + escapeHtml(val) + '"></option>')
+        .join('');
+    }
+
+    function scrollLaunchIntoView() {
+      const el = document.getElementById('launch-actions');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function getCheckedPresetInputs() {
+      return Array.from(presetsContainer.querySelectorAll('input.preset-cb:checked'));
+    }
+
+    function updateLaunchSelectedCount() {
+      const n = getCheckedPresetInputs().length;
+      launchSelectedLabel.textContent = 'Launch selected (' + n + ')';
+      launchSelectedBtn.disabled = n === 0;
+    }
+
+    /** Greedy row-wrap using available screen work area (stable DOM order). */
+    function computeTilePositions(dimensions) {
+      const s = window.screen;
+      const availLeft = s.availLeft ?? 0;
+      const availTop = s.availTop ?? 0;
+      const availWidth = s.availWidth ?? s.width;
+      const availHeight = s.availHeight ?? s.height;
+      const out = [];
+      let cursorX = availLeft;
+      let cursorY = availTop;
+      let rowHeight = 0;
+
+      dimensions.forEach(({ w, h }) => {
+        if (cursorX > availLeft && cursorX + w > availLeft + availWidth) {
+          cursorX = availLeft;
+          cursorY += rowHeight + TILE_GAP;
+          rowHeight = 0;
+        }
+        let left = cursorX;
+        let top = cursorY;
+        if (top + h > availTop + availHeight) {
+          top = Math.max(availTop, availTop + availHeight - h);
+        }
+        if (left + w > availLeft + availWidth) {
+          left = Math.max(availLeft, availLeft + availWidth - w);
+        }
+        out.push({ left: Math.round(left), top: Math.round(top) });
+        rowHeight = Math.max(rowHeight, h);
+        cursorX = left + w + TILE_GAP;
+      });
+      return out;
+    }
+
+    function openTestWindow(finalUrl, w, h, left, top, windowName) {
+      const features =
+        'width=' +
+        w +
+        ',height=' +
+        h +
+        ',top=' +
+        top +
+        ',left=' +
+        left +
+        ',popup=yes,noopener=yes,noreferrer=yes,scrollbars=yes';
+      return window.open(finalUrl, windowName, features);
+    }
 
     // Render Presets dynamically
     function renderPresets() {
@@ -359,23 +493,47 @@
       ];
 
       categories.forEach(cat => {
-        const listItems = presets[cat.key].map(p => `
-          <li>
+        const listItems = presets[cat.key]
+          .map((p, idx) => {
+            const cbId = 'preset-cb-' + cat.key + '-' + idx;
+            const safeLabel = escapeHtml(p.label);
+            const ariaPick = escapeHtml(p.label + ', ' + p.w + ' by ' + p.h + ' pixels');
+            return `
+          <li class="flex items-center gap-2 w-full text-sm py-2 px-3 -mx-3 rounded-lg text-zinc-600 hover:bg-zinc-200/50 transition-colors group">
+            <input
+              type="checkbox"
+              id="${cbId}"
+              class="preset-cb shrink-0 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+              data-w="${p.w}"
+              data-h="${p.h}"
+              aria-label="Include in batch: ${safeLabel}"
+            />
             <button
               type="button"
-              onclick="applyPreset(${p.w}, ${p.h})"
-              class="w-full text-left text-sm py-2 px-3 -mx-3 rounded-lg text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/50 transition-colors flex justify-between items-center gap-2 group"
+              class="preset-device-btn flex-1 min-w-0 flex items-center gap-2 text-left rounded-lg py-1 -my-1 pr-1 text-zinc-600 hover:text-zinc-900 group-hover:text-zinc-900"
+              data-w="${p.w}"
+              data-h="${p.h}"
+              aria-label="Use size for single launch: ${ariaPick}"
             >
-              <span class="truncate min-w-0 pr-2">${p.label}</span>
+              <span class="truncate flex-1 min-w-0">${safeLabel}</span>
               <span class="shrink-0 text-zinc-400 font-mono text-xs opacity-80 group-hover:opacity-100 whitespace-nowrap">${p.w}×${p.h}</span>
             </button>
-          </li>
-        `).join('');
+          </li>`;
+          })
+          .join('');
 
         const categoryHTML = `
-          <div>
-            <div class="flex items-center gap-2 text-zinc-800 mb-4 font-medium">
-              <i data-lucide="${cat.icon}" class="w-4 h-4 text-zinc-500" aria-hidden="true"></i> ${cat.key}
+          <div class="preset-category" data-preset-category="${cat.key}">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-zinc-800 mb-3 font-medium">
+              <div class="flex items-center gap-2">
+                <i data-lucide="${cat.icon}" class="w-4 h-4 text-zinc-500" aria-hidden="true"></i>
+                <span>${cat.key}</span>
+              </div>
+              <div class="flex items-center gap-1 text-xs font-normal">
+                <button type="button" class="preset-select-all px-2 py-1 rounded-md text-zinc-600 hover:bg-zinc-200/70 hover:text-zinc-900" data-preset-category="${cat.key}">All</button>
+                <span class="text-zinc-300" aria-hidden="true">|</span>
+                <button type="button" class="preset-clear-cat px-2 py-1 rounded-md text-zinc-600 hover:bg-zinc-200/70 hover:text-zinc-900" data-preset-category="${cat.key}">Clear</button>
+              </div>
             </div>
             <ul class="space-y-1.5">
               ${listItems}
@@ -432,7 +590,7 @@
       return 'https://' + trimmed;
     }
 
-    // Form Submission / Algorithm
+    // Form Submission — single manual resolution
     testerForm.addEventListener('submit', (e) => {
       e.preventDefault();
       errorText.textContent = '';
@@ -454,16 +612,130 @@
         return;
       }
 
-      // Calculate center position based on user's screen
-      const left = (window.screen.width - w) / 2;
-      const top = (window.screen.height - h) / 2;
+      const s = window.screen;
+      const availLeft = s.availLeft ?? 0;
+      const availTop = s.availTop ?? 0;
+      const availWidth = s.availWidth ?? s.width;
+      const availHeight = s.availHeight ?? s.height;
+      const left = availLeft + (availWidth - w) / 2;
+      const top = availTop + (availHeight - h) / 2;
 
-      // Launch the popup
-      const features = `width=${w},height=${h},top=${top},left=${left},popup=yes,noopener=yes,noreferrer=yes,scrollbars=yes`;
-      const newWin = window.open(finalUrl, 'ResolutionTesterWindow', features);
+      const newWin = openTestWindow(
+        finalUrl,
+        w,
+        h,
+        Math.round(left),
+        Math.round(top),
+        'ResolutionTester_' + Date.now()
+      );
 
       if (!newWin) {
         showError('Popup blocked! Please allow popups for this site to use the resolution tester.');
+      } else {
+        rememberUrlUsed(urlInput.value.trim());
+      }
+    });
+
+    launchSelectedBtn.addEventListener('click', () => {
+      errorText.textContent = '';
+      errorText.classList.add('hidden');
+
+      let finalUrl = urlInput.value.trim();
+      if (!finalUrl) {
+        showError('Please enter a valid URL.');
+        return;
+      }
+
+      finalUrl = withDefaultScheme(finalUrl);
+
+      const inputs = getCheckedPresetInputs();
+      if (inputs.length === 0) return;
+
+      if (inputs.length > MAX_BATCH_PRESETS) {
+        showError(
+          'Please select at most ' +
+            MAX_BATCH_PRESETS +
+            ' presets at once. Fewer windows are less likely to be blocked by your browser.'
+        );
+        return;
+      }
+
+      const items = inputs.map(el => ({
+        w: parseInt(el.getAttribute('data-w'), 10),
+        h: parseInt(el.getAttribute('data-h'), 10)
+      }));
+
+      const invalid = items.some(it => isNaN(it.w) || isNaN(it.h) || it.w <= 0 || it.h <= 0);
+      if (invalid) {
+        showError('Invalid preset dimensions.');
+        return;
+      }
+
+      const positions = computeTilePositions(items);
+      const base = Date.now();
+      let opened = 0;
+      items.forEach((item, i) => {
+        const pos = positions[i];
+        const wName = 'ResolutionTester_' + base + '_' + i;
+        if (openTestWindow(finalUrl, item.w, item.h, pos.left, pos.top, wName)) opened++;
+      });
+
+      if (opened === 0) {
+        showError('Popup blocked! Please allow popups for this site to use the resolution tester.');
+      } else {
+        rememberUrlUsed(urlInput.value.trim());
+        if (opened < items.length) {
+          showError(
+            'Opened ' + opened + ' of ' + items.length + ' windows. Some popups may have been blocked.'
+          );
+        }
+      }
+    });
+
+    presetsContainer.addEventListener('click', e => {
+      const t = e.target;
+      if (!(t instanceof HTMLElement)) return;
+
+      const deviceBtn = t.closest('button.preset-device-btn');
+      if (deviceBtn) {
+        e.preventDefault();
+        const w = deviceBtn.getAttribute('data-w');
+        const h = deviceBtn.getAttribute('data-h');
+        if (w && h) {
+          widthInput.value = w;
+          heightInput.value = h;
+        }
+        scrollLaunchIntoView();
+        return;
+      }
+
+      if (t.classList.contains('preset-select-all')) {
+        const cat = t.getAttribute('data-preset-category');
+        if (!cat) return;
+        presetsContainer
+          .querySelectorAll('.preset-category[data-preset-category="' + cat + '"] .preset-cb')
+          .forEach(cb => {
+            cb.checked = true;
+          });
+        updateLaunchSelectedCount();
+        scrollLaunchIntoView();
+      }
+      if (t.classList.contains('preset-clear-cat')) {
+        const cat = t.getAttribute('data-preset-category');
+        if (!cat) return;
+        presetsContainer
+          .querySelectorAll('.preset-category[data-preset-category="' + cat + '"] .preset-cb')
+          .forEach(cb => {
+            cb.checked = false;
+          });
+        updateLaunchSelectedCount();
+      }
+    });
+
+    presetsContainer.addEventListener('change', e => {
+      const t = e.target;
+      if (t instanceof HTMLInputElement && t.classList.contains('preset-cb')) {
+        updateLaunchSelectedCount();
       }
     });
 
@@ -474,8 +746,14 @@
 
     // Initialize Page
     document.addEventListener('DOMContentLoaded', () => {
+      const hist = loadUrlHistory();
+      renderUrlHistoryDatalist(hist);
+      if (hist.length && !urlInput.value.trim()) {
+        urlInput.value = hist[0];
+      }
       renderPresets();
       renderFAQs();
+      updateLaunchSelectedCount();
       // Initialize Lucide icons after dynamic HTML injection
       lucide.createIcons();
     });
